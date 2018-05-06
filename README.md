@@ -7,8 +7,8 @@ APIs which explicitly implement the same API twice, once with calls to
 synchronous functions, and once with asynchronous functions.
 
 Take for example `fs.readFile` and `fs.readFileSync`, if you're writing an API
-that loads files and then performs and operation on the datas, it can be
-frustrating to maintain two parallel functions.
+that loads a file and then performs a synchronous operation on the data, it
+can be frustrating to maintain two parallel functions.
 
 
 ## Example
@@ -41,6 +41,22 @@ myOperation.errback("./some-file.js", (err, result) => {
 
 });
 ```
+
+This could even be exposed as your official API by doing
+```js
+// Using the common 'Sync' suffix for sync functions, and 'Async' suffix for
+// promise-returning versions.
+exports.myOperationSync = myOperation.sync;
+exports.myOperationAsync = myOperation.async;
+exports.myOperation = myOperation.errback;
+```
+or potentially expose one of the async versions as the default, with a
+`.sync` property on the function to expose the synchronous version.
+```js
+module.exports = myOperation.errback;
+module.exports.sync = myOperation.sync;
+````
+
 
 ## API
 
