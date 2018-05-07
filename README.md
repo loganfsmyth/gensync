@@ -143,7 +143,8 @@ const code = yield* readFileAndMore("./file.js", "utf8");
   Example: `4`
 
   A number for the length to set on the returned function. If no value
-  is provided, the length will just be 0.
+  is provided, the length will be carried over from the `sync` function's
+  `length` value.
 
 ##### Example
 
