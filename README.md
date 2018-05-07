@@ -134,7 +134,7 @@ const code = yield* readFileAndMore("./file.js", "utf8");
   Example: `"readFile"`
 
   A string name to apply to the returned function. If no value is provided,
-  the name of `errback`/`async`/`async` functions will be used, with any
+  the name of `errback`/`async`/`sync` functions will be used, with any
   `Sync` or `Async` suffix stripped off. If the callback is simply named
   with ES6 inference (same name as the options property), the name is ignored.
 
