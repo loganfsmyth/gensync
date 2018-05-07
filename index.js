@@ -166,6 +166,10 @@ function newGenerator({ name, arity, sync, async, errback }) {
     }
   }
 
+  if (typeof arity !== "number") {
+    arity = sync.length;
+  }
+
   return buildOperation({
     name,
     arity,

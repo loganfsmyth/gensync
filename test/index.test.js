@@ -181,10 +181,10 @@ describe("gensync({})", () => {
     test("default arity", () => {
       expect(
         gensync({
-          sync: throwTestError,
+          sync: function(a, b, c, d, e, f, g){ throwTestError(); },
           async: throwTestError,
         }).length
-      ).toBe(0);
+      ).toBe(7);
     });
 
     test("explicit arity", () => {
