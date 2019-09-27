@@ -4,14 +4,14 @@ opaque type Next = Function | void;
 opaque type Yield = mixed;
 
 export type Gensync<Args, Return> = {
-  (...args: Args): Handler<Args, Return>,
+  (...args: Args): Handler<Return>,
   sync(...args: Args): Return,
   async(...args: Args): Promise<Return>,
   // ...args: [...Args, Callback]
   errback(...args: any[]): void,
 };
 
-export type Handler<Args, Return> = (...args: Args) => Generator<Yield, Return, Next>;
+export type Handler<Return> = Generator<Yield, Return, Next>;
 export type Options<Args, Return> = {
   sync: (...args: Args) => Return,
   async: (...args: Args) => Promise<Return>,
@@ -22,5 +22,5 @@ export type Options<Args, Return> = {
 };
 
 declare module.exports: {
-  <Args, Return>(Options<Return> | Handler<Args, Return>): Gensync<Args, Return>,
+  <Args, Return>(Options<Args, Return> | (...args: Args) => Handler<Return>): Gensync<Args, Return>,
 };
