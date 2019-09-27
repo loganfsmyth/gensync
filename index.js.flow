@@ -26,4 +26,7 @@ declare module.exports: {
   <Args, Return>(
     Options<Args, Return> | ((...args: Args) => Handler<Return>)
   ): Gensync<Args, Return>,
+
+  all<Return>(Array<Handler<Return>>): Handler<Return[]>,
+  race<Return>(Array<Handler<Return>>): Handler<Return>,
 };
