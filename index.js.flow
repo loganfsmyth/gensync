@@ -13,14 +13,17 @@ export type Gensync<Args, Return> = {
 
 export type Handler<Return> = Generator<Yield, Return, Next>;
 export type Options<Args, Return> = {
-  sync: (...args: Args) => Return,
-  async: (...args: Args) => Promise<Return>,
-  // ...args: [...Args, Callback]
-  errback: (...args: any[]) => void,
+  sync(...args: Args): Return,
   arity?: number,
   name?: string,
-};
+} & (
+  | { async(...args: Args): Promise<Return> }
+  // ...args: [...Args, Callback]
+  | { errback(...args: any[]): void }
+);
 
 declare module.exports: {
-  <Args, Return>(Options<Args, Return> | (...args: Args) => Handler<Return>): Gensync<Args, Return>,
+  <Args, Return>(
+    Options<Args, Return> | ((...args: Args) => Handler<Return>)
+  ): Gensync<Args, Return>,
 };
