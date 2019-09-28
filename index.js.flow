@@ -17,7 +17,7 @@ export type Options<Args, Return> = {
   arity?: number,
   name?: string,
 } & (
-  | { async(...args: Args): Promise<Return> }
+  | { async?: (...args: Args) => Promise<Return> }
   // ...args: [...Args, Callback]
   | { errback(...args: any[]): void }
 );
