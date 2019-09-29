@@ -1,6 +1,6 @@
 {
   "name": "gensync",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "license": "MIT",
   "description": "Allows users to use generators in order to write common functions that can be both sync or async.",
   "main": "index.js",
