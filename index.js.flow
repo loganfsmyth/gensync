@@ -29,4 +29,5 @@ declare module.exports: {
 
   all<Return>(Array<Handler<Return>>): Handler<Return[]>,
   race<Return>(Array<Handler<Return>>): Handler<Return>,
+  onFirstPause<Return>(Handler<Return>, cb: Function): Handler<Return>,
 };

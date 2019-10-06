@@ -194,3 +194,8 @@ const loadFiles = gensync(function* () {
   ]);
 });
 ```
+
+### gensync.onFirstPause(generator, callback)
+
+This method returns a gensync generator which calls `callback` when `generator`
+yields an async operation.

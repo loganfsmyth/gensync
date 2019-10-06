@@ -71,6 +71,16 @@ module.exports = Object.assign(
         }
       },
     }),
+    onFirstPause: buildOperation({
+      name: "onFirstPause",
+      arity: 2,
+      sync: function([item]) {
+        return evaluateSync(item);
+      },
+      async: function([item, cb], resolve, reject) {
+        evaluateAsync(item, resolve, reject, cb);
+      },
+    }),
   }
 );
 
@@ -247,7 +257,8 @@ function evaluateSync(gen) {
   return value;
 }
 
-function evaluateAsync(gen, resolve, reject) {
+function evaluateAsync(gen, resolve, reject, onFirstPause) {
+  let didFirstPause = false;
   (function step() {
     try {
       let value;
@@ -271,6 +282,11 @@ function evaluateAsync(gen, resolve, reject) {
         assertSuspend(out, gen);
 
         if (!didSyncResume) {
+          if (!didFirstPause && onFirstPause) {
+            didFirstPause = true;
+            onFirstPause();
+          } 
+
           // Callback wasn't called synchronously, so break out of the loop
           // and let it call 'step' later.
           return;
