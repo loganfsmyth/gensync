@@ -5,6 +5,11 @@
   "description": "Allows users to use generators in order to write common functions that can be both sync or async.",
   "main": "index.js",
   "author": "Logan Smyth <loganfsmyth@gmail.com>",
+  "homepage": "https://github.com/loganfsmyth/gensync",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loganfsmyth/gensync.git"
+  },
   "scripts": {
     "test": "jest"
   },
