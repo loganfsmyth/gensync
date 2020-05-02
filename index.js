@@ -201,7 +201,9 @@ function buildOperation({ name, arity, sync, async }) {
   return setFunctionMetadata(name, arity, function*(...args) {
     const resume = yield GENSYNC_START;
     if (!resume) {
-      return sync.call(this, args);
+      // Break the tail call to avoid a bug in V8 v6.X with --harmony enabled.
+      const res = sync.call(this, args);
+      return res;
     }
 
     let result;
