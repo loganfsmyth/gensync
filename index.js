@@ -33,6 +33,11 @@ module.exports = Object.assign(
       async: function(args, resolve, reject) {
         const items = Array.from(args[0]);
 
+        if (items.length === 0) {
+          Promise.resolve().then(() => resolve([]));
+          return;
+        }
+
         let count = 0;
         const results = items.map(() => undefined);
         items.forEach((item, i) => {
