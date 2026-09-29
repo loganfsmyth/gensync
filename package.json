@@ -11,7 +11,8 @@
     "url": "https://github.com/loganfsmyth/gensync.git"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "bench": "node --experimental-bench --bench benchmark.mjs"
   },
   "engines": {
     "node": ">=6.9.0"
