@@ -4,3 +4,4 @@
 .prettierrc
 .travis.yml
 yarn.lock
+test/

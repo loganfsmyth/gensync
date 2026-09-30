@@ -1,6 +1,6 @@
 "use strict";
 
-const promisify = require("util.promisify");
+const promisify = require("util").promisify;
 const gensync = require("../");
 
 const TEST_ERROR = new Error("TEST_ERROR");
