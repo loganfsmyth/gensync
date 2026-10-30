@@ -26,11 +26,11 @@ module.exports = Object.assign(
     all: buildOperation({
       name: "all",
       arity: 1,
-      sync: function(args) {
+      sync: function (args) {
         const items = Array.from(args[0]);
-        return items.map(item => evaluateSync(item));
+        return items.map((item) => evaluateSync(item));
       },
-      async: function(args, resolve, reject) {
+      async: function (args, resolve, reject) {
         const items = Array.from(args[0]);
 
         if (items.length === 0) {
@@ -43,7 +43,7 @@ module.exports = Object.assign(
         items.forEach((item, i) => {
           evaluateAsync(
             item,
-            val => {
+            (val) => {
               results[i] = val;
               count += 1;
 
@@ -57,7 +57,7 @@ module.exports = Object.assign(
     race: buildOperation({
       name: "race",
       arity: 1,
-      sync: function(args) {
+      sync: function (args) {
         const items = Array.from(args[0]);
         if (items.length === 0) {
           throw makeError("Must race at least 1 item", GENSYNC_RACE_NONEMPTY);
@@ -65,7 +65,7 @@ module.exports = Object.assign(
 
         return evaluateSync(items[0]);
       },
-      async: function(args, resolve, reject) {
+      async: function (args, resolve, reject) {
         const items = Array.from(args[0]);
         if (items.length === 0) {
           throw makeError("Must race at least 1 item", GENSYNC_RACE_NONEMPTY);
@@ -85,15 +85,15 @@ module.exports = Object.assign(
  */
 function makeFunctionAPI(genFn) {
   const fns = {
-    sync: function(...args) {
+    sync: function (...args) {
       return evaluateSync(genFn.apply(this, args));
     },
-    async: function(...args) {
+    async: function (...args) {
       return new Promise((resolve, reject) => {
         evaluateAsync(genFn.apply(this, args), resolve, reject);
       });
     },
-    errback: function(...args) {
+    errback: function (...args) {
       const cb = args.pop();
       if (typeof cb !== "function") {
         throw makeError(
@@ -110,7 +110,11 @@ function makeFunctionAPI(genFn) {
         return;
       }
 
-      evaluateAsync(gen, val => cb(undefined, val), err => cb(err));
+      evaluateAsync(
+        gen,
+        (val) => cb(undefined, val),
+        (err) => cb(err)
+      );
     },
   };
   return fns;
@@ -178,10 +182,10 @@ function newGenerator({ name, arity, sync, async, errback }) {
   return buildOperation({
     name,
     arity,
-    sync: function(args) {
+    sync: function (args) {
       return sync.apply(this, args);
     },
-    async: function(args, resolve, reject) {
+    async: function (args, resolve, reject) {
       if (async) {
         async.apply(this, args).then(resolve, reject);
       } else if (errback) {
@@ -197,13 +201,13 @@ function newGenerator({ name, arity, sync, async, errback }) {
 }
 
 function wrapGenerator(genFn) {
-  return setFunctionMetadata(genFn.name, genFn.length, function(...args) {
+  return setFunctionMetadata(genFn.name, genFn.length, function (...args) {
     return genFn.apply(this, args);
   });
 }
 
 function buildOperation({ name, arity, sync, async }) {
-  return setFunctionMetadata(name, arity, function*(...args) {
+  return setFunctionMetadata(name, arity, function* (...args) {
     const resume = yield GENSYNC_START;
     if (!resume) {
       // Break the tail call to avoid a bug in V8 v6.X with --harmony enabled.
@@ -216,13 +220,13 @@ function buildOperation({ name, arity, sync, async }) {
       async.call(
         this,
         args,
-        value => {
+        (value) => {
           if (result) return;
 
           result = { value };
           resume();
         },
-        err => {
+        (err) => {
           if (result) return;
 
           result = { err };

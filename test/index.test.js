@@ -181,7 +181,7 @@ describe("gensync({})", () => {
     test("default arity", () => {
       expect(
         gensync({
-          sync: function(a, b, c, d, e, f, g) {
+          sync: function (a, b, c, d, e, f, g) {
             throwTestError();
           },
           async: throwTestError,
@@ -285,7 +285,7 @@ describe("gensync({})", () => {
 
 describe("gensync(function* () {})", () => {
   test("sync throw before body", async () => {
-    const fn = gensync(function*(arg = throwTestError()) {});
+    const fn = gensync(function* (arg = throwTestError()) {});
 
     await expectResult(fn, undefined, {
       error: TEST_ERROR,
@@ -294,7 +294,7 @@ describe("gensync(function* () {})", () => {
   });
 
   test("sync throw inside body", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       throwTestError();
     });
 
@@ -305,7 +305,7 @@ describe("gensync(function* () {})", () => {
   });
 
   test("async throw inside body", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       const val = yield* doSuccess();
       throwTestError();
     });
@@ -316,7 +316,7 @@ describe("gensync(function* () {})", () => {
   });
 
   test("error inside body", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       yield* doError();
     });
 
@@ -328,7 +328,7 @@ describe("gensync(function* () {})", () => {
   });
 
   test("successful return value", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       const value = yield* doSuccess();
 
       expect(value).toBe(42);
@@ -344,7 +344,7 @@ describe("gensync(function* () {})", () => {
   });
 
   test("successful final value", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       return 42;
     });
 
@@ -355,7 +355,7 @@ describe("gensync(function* () {})", () => {
   });
 
   test("yield unexpected object", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       yield {};
     });
 
@@ -372,7 +372,7 @@ describe("gensync(function* () {})", () => {
   });
 
   test("yield suspend yield", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       yield Symbol.for("gensync:v1:start");
 
       // Should be "yield*" for no error.
@@ -390,7 +390,7 @@ describe("gensync(function* () {})", () => {
   });
 
   test("yield suspend return", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       yield Symbol.for("gensync:v1:start");
 
       // Should be "yield*" for no error.
@@ -410,7 +410,7 @@ describe("gensync(function* () {})", () => {
 
 describe("gensync.all()", () => {
   test("success", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       const result = yield* gensync.all([doSuccess(), doSuccess()]);
 
       expect(result).toEqual([42, 42]);
@@ -424,7 +424,7 @@ describe("gensync.all()", () => {
   });
 
   test("error first", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       yield* gensync.all([doError(), doSuccess()]);
     });
 
@@ -436,7 +436,7 @@ describe("gensync.all()", () => {
   });
 
   test("error last", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       yield* gensync.all([doSuccess(), doError()]);
     });
 
@@ -448,7 +448,7 @@ describe("gensync.all()", () => {
   });
 
   test("empty list", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       yield* gensync.all([]);
     });
 
@@ -462,7 +462,7 @@ describe("gensync.all()", () => {
 
 describe("gensync.race()", () => {
   test("success", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       const result = yield* gensync.race([doSuccess(), doError()]);
 
       expect(result).toEqual(42);
@@ -476,7 +476,7 @@ describe("gensync.race()", () => {
   });
 
   test("error", async () => {
-    const fn = gensync(function*() {
+    const fn = gensync(function* () {
       yield* gensync.race([doError(), doSuccess()]);
     });
 

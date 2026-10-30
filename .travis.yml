@@ -3,4 +3,5 @@ node_js:
   - '10'
   - '8'
   - '6'
+install: yarn install --frozen-lockfile --ignore-engines
 script: yarn run test
