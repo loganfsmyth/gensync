@@ -2,6 +2,6 @@
 .flowconfig
 .gitignore
 .prettierrc
-.travis.yml
+.github/
 yarn.lock
 test/
