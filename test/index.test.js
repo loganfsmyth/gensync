@@ -1,6 +1,5 @@
 "use strict";
 
-const promisify = require("util").promisify;
 const gensync = require("../");
 
 const TEST_ERROR = new Error("TEST_ERROR");
@@ -306,7 +305,7 @@ describe("gensync(function* () {})", () => {
 
   test("async throw inside body", async () => {
     const fn = gensync(function* () {
-      const val = yield* doSuccess();
+      yield* doSuccess();
       throwTestError();
     });
 

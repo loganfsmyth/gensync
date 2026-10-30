@@ -13,7 +13,7 @@ const GENSYNC_ERRBACK_NO_CALLBACK = "GENSYNC_ERRBACK_NO_CALLBACK";
 
 module.exports = Object.assign(
   function gensync(optsOrFn) {
-    let genFn = optsOrFn;
+    let genFn;
     if (typeof optsOrFn !== "function") {
       genFn = newGenerator(optsOrFn);
     } else {
@@ -242,7 +242,7 @@ function buildOperation({ name, arity, sync, async }) {
     // callback was already called.
     yield GENSYNC_SUSPEND;
 
-    if (result.hasOwnProperty("err")) {
+    if (Object.prototype.hasOwnProperty.call(result, "err")) {
       throw result.err;
     }
 
@@ -331,14 +331,6 @@ function throwError(gen, err) {
   // from being swallowed by user code try/catches.
   if (gen.throw) gen.throw(err);
   throw err;
-}
-
-function isIterable(value) {
-  return (
-    !!value &&
-    (typeof value === "object" || typeof value === "function") &&
-    !value[Symbol.iterator]
-  );
 }
 
 function setFunctionMetadata(name, arity, fn) {
