@@ -200,7 +200,7 @@ describe("gensync({})", () => {
     });
   });
 
-  describe("'sync' handler", async () => {
+  describe("'sync' handler", () => {
     test("success", async () => {
       const fn = gensync({
         sync: (...args) => JSON.stringify(args),
@@ -220,7 +220,7 @@ describe("gensync({})", () => {
     });
   });
 
-  describe("'async' handler", async () => {
+  describe("'async' handler", () => {
     test("success", async () => {
       const fn = gensync({
         sync: throwTestError,
@@ -240,7 +240,7 @@ describe("gensync({})", () => {
     });
   });
 
-  describe("'errback' sync handler", async () => {
+  describe("'errback' sync handler", () => {
     test("success", async () => {
       const fn = gensync({
         sync: throwTestError,
@@ -260,7 +260,7 @@ describe("gensync({})", () => {
     });
   });
 
-  describe("'errback' async handler", async () => {
+  describe("'errback' async handler", () => {
     test("success", async () => {
       const fn = gensync({
         sync: throwTestError,

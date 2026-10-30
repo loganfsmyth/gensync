@@ -25,14 +25,17 @@
     "callbacks"
   ],
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.6.1",
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-prettier": "^2.6.0",
     "flow-bin": "^0.71.0",
-    "jest": "^22.4.3",
+    "jest": "^24.9.0",
     "prettier": "^1.12.1"
+  },
+  "resolutions": {
+    "node-releases": "2.0.44"
   }
 }
